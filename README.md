@@ -2,7 +2,7 @@
 
 A web-based tool for produce wholesalers and retailers to quickly calculate quotes with multiple margin calculation methods, designed for efficient pricing and profitability analysis.
 
-🔗 **[Live Demo](#)**
+🔗 **Live Demo**
 https://mjbusch2121.github.io/Produce-Margin-Calculator/
 
 ![Calculator Preview](screenshot.png)
