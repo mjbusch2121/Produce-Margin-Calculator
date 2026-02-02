@@ -135,7 +135,7 @@ MIT License - Feel free to use this project for personal or commercial purposes.
 ## Author
 
 **Mike** - Produce enthusiast and web developer  
-[GitHub] https://github.com/mjbusch2121 | [Portfolio] michaelbuschportfolio.com | [LinkedIn] https://www.linkedin.com/in/mike-busch-0b343a34b/
+[GitHub] https://github.com/mjbusch2121 | [Portfolio] https://www.michaelbuschportfolio.com | [LinkedIn] https://www.linkedin.com/in/mike-busch-0b343a34b/
 
 ---
 
