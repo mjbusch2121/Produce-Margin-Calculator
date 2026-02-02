@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Produce Quote & Margin Calculator</title>
+    <link rel="stylesheet" href="calc.css" />
+  </head>
+  <body>
+    <!-- Main container for the entire calculator interface -->
+    <div class="container">
+      <!-- Page header with title and description -->
+      <h1>Produce Quote & Margin Calculator</h1>
+      <p class="subtitle">Calculate quotes and margins for multiple products</p>
+
+      <!-- Quote header section with date display -->
+      <div class="quote-header">
+        <h2>Quote</h2>
+        <p class="quote-date" id="quoteDate"></p>
+      </div>
+
+      <!-- Margin calculation method selector (hidden when printing) -->
+      <div class="section no-print">
+        <h3 class="section-title">Margin Calculation Method</h3>
+        <!-- Radio buttons for different margin calculation methods -->
+        <div class="margin-options">
+          <label class="margin-option">
+            <input type="radio" name="marginType" value="gross" checked />
+            <span class="tooltip" data-tip="(Sell - Cost) / Sell * 100"
+              >Gross Margin %</span
+            >
+          </label>
+          <label class="margin-option">
+            <input type="radio" name="marginType" value="markup" />
+            <span class="tooltip" data-tip="(Sell - Cost) / Cost * 100"
+              >Markup %</span
+            >
+          </label>
+          <label class="margin-option">
+            <input type="radio" name="marginType" value="net" />
+            <span class="tooltip" data-tip="Profit / Revenue * 100"
+              >Net Margin %</span
+            >
+          </label>
+        </div>
+      </div>
+
+      <!-- Line items input section (hidden when printing) -->
+      <div class="section line-items no-print">
+        <h3 class="section-title">Line Items</h3>
+        <!-- Column headers for input fields -->
+        <div class="input-row" style="margin-bottom: 15px">
+          <div class="input-group">
+            <label>Product Name</label>
+          </div>
+          <div class="input-group">
+            <label>Cost ($)</label>
+          </div>
+          <div class="input-group">
+            <label>Sell Price ($)</label>
+          </div>
+          <div class="input-group">
+            <label>Quantity</label>
+          </div>
+          <div style="width: 40px"></div>
+        </div>
+        <!-- Dynamic container where line item rows will be added via JavaScript -->
+        <div id="lineItemsContainer"></div>
+        <!-- Action buttons for managing line items -->
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="addLineItem()">
+            + Add Item
+          </button>
+          <button class="btn btn-primary" onclick="calculateAll()">
+            Calculate Quote
+          </button>
+          <button class="btn btn-secondary" onclick="clearAll()">
+            Clear All
+          </button>
+        </div>
+      </div>
+
+      <!-- Results section displaying the quote summary and calculations -->
+      <div class="results" id="results">
+        <h3 class="section-title">Quote Summary</h3>
+        <!-- Results table showing all line items with calculations -->
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th class="number">Qty</th>
+              <th class="number">Unit Cost</th>
+              <th class="number">Unit Price</th>
+              <th class="number">Total</th>
+              <th class="number">Profit</th>
+              <th class="number">Margin</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+          <tfoot id="resultsFoot"></tfoot>
+        </table>
+        <!-- Summary cards showing totals and overall margin -->
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="summary-value" id="totalCost">$0.00</div>
+            <div class="summary-label">Total Cost</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value" id="totalRevenue">$0.00</div>
+            <div class="summary-label">Total Revenue</div>
+          </div>
+          <div class="summary-card" id="profitCard">
+            <div class="summary-value" id="totalProfit">$0.00</div>
+            <div class="summary-label">Total Profit</div>
+          </div>
+          <div class="summary-card highlight" id="marginCard">
+            <div class="summary-value" id="overallMargin">0%</div>
+            <div class="summary-label" id="marginLabel">Overall Margin</div>
+          </div>
+        </div>
+        <!-- Export and print buttons (hidden when printing) -->
+        <div class="btn-group no-print" style="margin-top: 25px">
+          <button class="btn btn-primary" onclick="printQuote()">
+            Print Quote
+          </button>
+          <button class="btn btn-secondary" onclick="exportCSV()">
+            Export CSV
+          </button>
+          <button class="btn btn-secondary" onclick="copyToClipboard()">
+            Copy to Clipboard
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript file containing all calculation and interaction logic -->
+    <script src="calc.js"></script>
+  </body>
+</html>
