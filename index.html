@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Produce Quote & Margin Calculator</title>
+    <!-- Prevent flash of wrong theme on page load -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('produce-calc-theme')
+          || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
     <link rel="stylesheet" href="calc.css" />
   </head>
   <body>
@@ -12,6 +20,15 @@
       <!-- Page header with title and description -->
       <h1>Produce Quote & Margin Calculator</h1>
       <p class="subtitle">Calculate quotes and margins for multiple products</p>
+
+      <!-- Dark mode toggle -->
+      <div class="theme-toggle-container">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <span class="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
+          <span class="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-label">Dark Mode</span>
+        </button>
+      </div>
 
       <!-- Quote header section with date display -->
       <div class="quote-header">

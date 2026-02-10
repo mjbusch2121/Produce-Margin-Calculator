@@ -5,10 +5,68 @@ let lineItems = [];
 // counter to generate unique ID's for each line item (never decrements, ensures uniqueness)
 let itemCounter = 0;
 
+// ===== THEME MANAGEMENT =====
+// Handles dark mode toggle and persistence
+
+const THEME_KEY = 'produce-calc-theme';
+
+// Detect system preference for dark mode
+function getSystemTheme() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
+
+// Get saved theme from localStorage or fall back to system preference
+function getInitialTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  return saved || getSystemTheme();
+}
+
+// Apply theme to document and save to localStorage
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+  updateThemeToggleButton(theme);
+}
+
+// Update toggle button appearance based on current theme
+function updateThemeToggleButton(theme) {
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    toggle.setAttribute('aria-pressed', theme === 'dark');
+  }
+}
+
+// Toggle between light and dark themes
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+}
+
 // page initialization
 // wait for DOM to fully load before running any code
 // this ensures all HTML elements exist before we try to manipulate them
 document.addEventListener("DOMContentLoaded", () => {
+  // Apply saved theme immediately (prevent flash of wrong theme)
+  applyTheme(getInitialTheme());
+
+  // Set up theme toggle button click handler
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+
+  // Listen for system theme changes (respects user's OS preferences)
+  window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', (e) => {
+      // Only auto-switch if user hasn't manually set a preference
+      if (!localStorage.getItem(THEME_KEY)) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+
   // automatically add one empty row when page loads so user can start entering data
   addLineItem();
 });
@@ -146,13 +204,13 @@ function calculateAll() {
     // create a new table row for this item
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td>${escapeHtml(name)}</td>
-        <td class="number">${qty}</td>
-        <td class="number">$${cost.toFixed(2)}</td>
-        <td class="number">$${sell.toFixed(2)}</td>
-        <td class="number">$${totalRevenue.toFixed(2)}</td>
-        <td class="number ${profitClass}">$${profit.toFixed(2)}</td>
-        <td class="number ${profitClass}">$${margin.toFixed(1)}%</td>
+        <td data-label="Product">${escapeHtml(name)}</td>
+        <td data-label="Qty" class="number">${qty}</td>
+        <td data-label="Unit Cost" class="number">$${cost.toFixed(2)}</td>
+        <td data-label="Unit Price" class="number">$${sell.toFixed(2)}</td>
+        <td data-label="Total" class="number">$${totalRevenue.toFixed(2)}</td>
+        <td data-label="Profit" class="number ${profitClass}">$${profit.toFixed(2)}</td>
+        <td data-label="Margin" class="number ${profitClass}">$${margin.toFixed(1)}%</td>
     `;
     // add the row to the table body
     resultsBody.appendChild(row);
@@ -180,10 +238,10 @@ function calculateAll() {
   // step 7: create the total in the table footer
   resultsFoot.innerHTML = `
   <tr>
-    <td colspan="4"><strong>TOTALS</strong></td>
-    <td class="number">$${grandTotalRevenue.toFixed(2)}</td>
-    <td class="number ${profitClass}">$${grandTotalProfit.toFixed(2)}</td>
-    <td class="number ${profitClass}">${overallMargin.toFixed(1)}%</td>
+    <td colspan="4" data-label=""><strong>TOTALS</strong></td>
+    <td data-label="Total" class="number">$${grandTotalRevenue.toFixed(2)}</td>
+    <td data-label="Profit" class="number ${profitClass}">$${grandTotalProfit.toFixed(2)}</td>
+    <td data-label="Margin" class="number ${profitClass}">${overallMargin.toFixed(1)}%</td>
   </tr>
   `;
 

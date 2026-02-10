@@ -1,3 +1,80 @@
+/* ===== CSS CUSTOM PROPERTIES ===== */
+/* Light theme variables */
+:root {
+  /* Color Palette - Light Theme */
+  --color-primary: #2e7d32;
+  --color-primary-dark: #1b5e20;
+  --color-primary-light: #4caf50;
+
+  --color-danger: #c62828;
+  --color-danger-dark: #8e0000;
+  --color-danger-light: #ef5350;
+
+  /* Surfaces */
+  --background: #f5f5f5;
+  --surface: #ffffff;
+  --surface-variant: #f5f5f5;
+  --surface-variant-hover: #eeeeee;
+
+  /* Text */
+  --text: #333333;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --text-on-primary: #ffffff;
+
+  /* Borders */
+  --border: #dddddd;
+  --border-light: #eeeeee;
+
+  /* Status Colors */
+  --profit-positive: #2e7d32;
+  --profit-negative: #c62828;
+  --profit-positive-bg: #e8f5e9;
+  --profit-negative-bg: #ffebee;
+
+  /* Shadows */
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  /* Color Palette - Dark Theme */
+  --color-primary: #4caf50;
+  --color-primary-dark: #2e7d32;
+  --color-primary-light: #66bb6a;
+
+  --color-danger: #ef5350;
+  --color-danger-dark: #c62828;
+  --color-danger-light: #ff7961;
+
+  /* Surfaces */
+  --background: #121212;
+  --surface: #1e1e1e;
+  --surface-variant: #2a2a2a;
+  --surface-variant-hover: #333333;
+
+  /* Text */
+  --text: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #808080;
+  --text-on-primary: #000000;
+
+  /* Borders */
+  --border: #333333;
+  --border-light: #444444;
+
+  /* Status Colors */
+  --profit-positive: #66bb6a;
+  --profit-negative: #ef5350;
+  --profit-positive-bg: #1b5e20;
+  --profit-negative-bg: #7f0000;
+
+  /* Shadows */
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
 /* Global reset - removes default browser spacing and ensures consistent box-sizing */
 * {
   box-sizing: border-box;
@@ -8,33 +85,81 @@
 /* Body styling - sets base font, background, and minimum height */
 body {
   font-family: "Calibri", sans-serif;
-  background: #f5f5f5;
+  background: var(--background);
+  color: var(--text);
   padding: 20px;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Main container - centers content and provides white card background */
 .container {
   max-width: 900px;
   margin: 0 auto;
-  background: white;
+  background: var(--surface);
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
   padding: 30px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Page title styling */
 h1 {
   text-align: center;
-  color: #2e7d32;
+  color: var(--color-primary);
   margin-bottom: 10px;
   font-size: 28px;
 }
 
 .subtitle {
   text-align: center;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 25px;
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
+/* Dark mode toggle styling */
+.theme-toggle-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--surface-variant);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-variant-hover);
+  border-color: var(--color-primary);
+}
+
+/* Show/hide sun/moon icons based on current theme */
+[data-theme="light"] .theme-icon-dark {
+  display: inline;
+}
+[data-theme="light"] .theme-icon-light {
+  display: none;
+}
+[data-theme="dark"] .theme-icon-dark {
+  display: none;
+}
+[data-theme="dark"] .theme-icon-light {
+  display: inline;
+}
+
+.theme-icon {
+  font-size: 18px;
+  line-height: 1;
 }
 
 /* General section spacing */
@@ -45,10 +170,10 @@ h1 {
 /* Section headings with bottom border */
 .section-title {
   font-size: 18px;
-  color: #333;
+  color: var(--text);
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid var(--border-light);
 }
 
 /* Input row grid layout - creates columns for product name, cost, price, quantity, and delete button */
@@ -68,7 +193,7 @@ h1 {
 
 .input-group label {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 4px;
 }
 
@@ -76,15 +201,18 @@ h1 {
 input,
 select {
   padding: 10px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--border);
   border-radius: 5px;
   font-size: 14px;
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.3s ease;
 }
 
 input:focus,
 select:focus {
   outline: none;
-  border-color: #2e7d32;
+  border-color: var(--color-primary);
 }
 
 /* Base button styling */
@@ -94,38 +222,39 @@ select:focus {
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
 }
 
 /* Primary action button (green) */
 .btn-primary {
-  background: #2e7d32;
-  color: white;
+  background: var(--color-primary);
+  color: var(--text-on-primary);
 }
 
 .btn-primary:hover {
-  background: #1b5e20;
+  background: var(--color-primary-dark);
 }
 
 /* Secondary action button (light green) */
 .btn-secondary {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--profit-positive-bg);
+  color: var(--color-primary);
 }
 
 .btn-secondary:hover {
-  background: #c8e6c9;
+  background: var(--surface-variant-hover);
 }
 
 /* Danger/delete button (red) */
 .btn-danger {
-  background: #ffebee;
-  color: #c62828;
+  background: var(--profit-negative-bg);
+  color: var(--color-danger);
   padding: 10px 12px;
 }
 
 .btn-danger:hover {
-  background: #ffcdd2;
+  background: var(--color-danger-light);
+  color: var(--text-on-primary);
 }
 
 /* Button group container with flexible wrapping */
@@ -162,7 +291,7 @@ select:focus {
   display: none;
   margin-top: 25px;
   padding-top: 25px;
-  border-top: 2px solid #eee;
+  border-top: 2px solid var(--border-light);
 }
 
 .results.show {
@@ -180,17 +309,18 @@ select:focus {
 .results-table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .results-table th {
-  background: #f5f5f5;
+  background: var(--surface-variant);
   font-weight: bold;
-  color: #333;
+  color: var(--text);
+  transition: all 0.3s ease;
 }
 
 .results-table td {
-  color: #666;
+  color: var(--text-secondary);
 }
 
 /* Right-align numerical columns with monospace font for better readability */
@@ -202,8 +332,8 @@ select:focus {
 /* Footer row styling (totals row) */
 .results-table tfoot td {
   font-weight: bold;
-  background: #e8f5e9;
-  color: #333;
+  background: var(--profit-positive-bg);
+  color: var(--text);
 }
 
 /* Summary cards grid - responsive layout that adapts to screen size */
@@ -216,48 +346,49 @@ select:focus {
 
 /* Individual summary card */
 .summary-card {
-  background: #f5f5f5;
+  background: var(--surface-variant);
   padding: 20px;
   border-radius: 8px;
   text-align: center;
+  transition: all 0.3s ease;
 }
 
 /* Highlighted card (used for overall margin) */
 .summary-card.highlight {
-  background: #e8f5e9;
+  background: var(--profit-positive-bg);
 }
 
 /* Negative value card (used when profit is negative) */
 .summary-card.negative {
-  background: #ffebee;
+  background: var(--profit-negative-bg);
 }
 
 /* Large value display in summary cards */
 .summary-value {
   font-size: 28px;
   font-weight: bold;
-  color: #2e7d32;
+  color: var(--profit-positive);
 }
 
 /* Red color for negative values */
 .summary-card.negative .summary-value {
-  color: #c62828;
+  color: var(--profit-negative);
 }
 
 /* Small label text below summary values */
 .summary-label {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   margin-top: 5px;
 }
 
 /* ===== PROFIT COLOR INDICATORS ===== */
 /* Applied to individual line items in the table to show profit status */
 .profit-positive {
-  color: #2e7d32; /* Green for profitable items */
+  color: var(--profit-positive); /* Green for profitable items */
 }
 .profit-negative {
-  color: #c62828; /* Red for items with negative profit */
+  color: var(--profit-negative); /* Red for items with negative profit */
 }
 
 /* ===== QUOTE HEADER (PRINT ONLY) ===== */
@@ -269,13 +400,25 @@ select:focus {
 
 .quote-date {
   text-align: right;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 10px;
 }
 
 /* ===== PRINT STYLES ===== */
 /* These styles override normal display when user prints the quote */
 @media print {
+  /* Force light theme for printing (save ink) */
+  :root,
+  [data-theme="dark"] {
+    --background: #ffffff;
+    --surface: #ffffff;
+    --text: #333333;
+    --text-secondary: #666666;
+    --border: #dddddd;
+    --border-light: #eeeeee;
+    --surface-variant: #f5f5f5;
+  }
+
   /* Remove background and padding for cleaner print */
   body {
     background: white;
@@ -309,14 +452,244 @@ select:focus {
 
 /* ===== MOBILE RESPONSIVE STYLES ===== */
 /* Adapts layout for smaller screens (tablets and phones) */
+
+/* ===== TABLETS AND LARGE PHONES (LANDSCAPE) ===== */
 @media (max-width: 768px) {
-  /* Change grid to 2 columns on mobile */
+  /* Reduce container padding for more screen real estate */
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  /* Reduce heading sizes */
+  h1 {
+    font-size: 24px;
+  }
+
+  /* Make buttons larger for touch targets */
+  .btn {
+    padding: 12px 18px;
+    font-size: 15px;
+    min-height: 44px;
+  }
+
+  .btn-group {
+    gap: 12px;
+  }
+
+  .btn-danger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Stack margin options vertically on mobile */
+  .margin-options {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .margin-option {
+    padding: 12px;
+    background: var(--surface-variant);
+    border-radius: 8px;
+  }
+
+  /* Change input grid to 2 columns */
   .input-row {
     grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
+
   /* Product name field spans both columns for more space */
   .input-row .input-group:first-child {
     grid-column: span 2;
+  }
+
+  /* ===== MOBILE TABLE CARD LAYOUT ===== */
+  /* Convert 7-column table to stacked cards for readability */
+
+  /* Hide desktop table headers and footers */
+  .results-table thead {
+    display: none;
+  }
+
+  /* Make table body a block container */
+  .results-table tbody {
+    display: block;
+  }
+
+  /* Transform each row into a card */
+  .results-table tr {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Transform each cell into a labeled row within the card */
+  .results-table td {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    text-align: left;
+    border: none;
+  }
+
+  /* Add label before each cell using data-label attribute */
+  .results-table td::before {
+    content: attr(data-label) ":";
+    font-weight: bold;
+    color: var(--text-secondary);
+  }
+
+  /* Right-align values in mobile cards */
+  .results-table td.number {
+    text-align: right;
+  }
+
+  /* Make footer visible but styled as a card */
+  .results-table tfoot {
+    display: block;
+  }
+
+  .results-table tfoot tr {
+    display: block;
+    background: var(--profit-positive-bg);
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .results-table tfoot td {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    border: none;
+  }
+
+  .results-table tfoot td::before {
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  /* Hide the "TOTALS" label on mobile since it's obvious */
+  .results-table tfoot td[colspan] {
+    display: none;
+  }
+
+  /* Optimize summary cards for mobile */
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .summary-card {
+    padding: 15px;
+  }
+
+  .summary-value {
+    font-size: 24px;
+  }
+}
+
+/* ===== LARGE PHONES (PORTRAIT) ===== */
+@media (max-width: 600px) {
+  /* Single column input layout for narrow screens */
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .input-row .input-group:first-child {
+    grid-column: span 1;
+  }
+
+  /* Full-width delete button */
+  .input-row button.btn-danger {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  /* Reduce summary card size further */
+  .summary-card {
+    padding: 12px;
+  }
+
+  .summary-value {
+    font-size: 20px;
+  }
+
+  .summary-label {
+    font-size: 11px;
+  }
+}
+
+/* ===== SMALL PHONES ===== */
+@media (max-width: 480px) {
+  /* Further reduce spacing for very small screens */
+  body {
+    padding: 5px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  /* Ensure all buttons remain touch-friendly */
+  .btn {
+    padding: 12px 16px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Reduce table card padding */
+  .results-table tr {
+    padding: 12px;
+  }
+
+  .results-table td {
+    grid-template-columns: 100px 1fr;
+    padding: 6px 0;
+  }
+}
+
+/* ===== TOUCH-FRIENDLY TOOLTIPS ===== */
+/* Adjust tooltips for touch devices */
+@media (hover: none) {
+  /* Position tooltips below element on touch devices */
+  .tooltip::after {
+    bottom: auto;
+    top: 100%;
+    margin-top: 5px;
+  }
+
+  /* Increase tooltip size for readability */
+  .tooltip::after {
+    font-size: 13px;
+    padding: 8px 12px;
   }
 }
 
@@ -325,7 +698,7 @@ select:focus {
 .empty-state {
   text-align: center;
   padding: 40px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 /* ===== TOOLTIP FUNCTIONALITY ===== */
@@ -342,8 +715,8 @@ select:focus {
   bottom: 100%; /* Positions above the element */
   left: 50%;
   transform: translateX(-50%); /* Centers horizontally */
-  background: #333;
-  color: white;
+  background: var(--text);
+  color: var(--surface);
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 12px;
