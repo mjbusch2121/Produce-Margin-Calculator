@@ -2,7 +2,8 @@
 
 A web-based tool for produce wholesalers and retailers to quickly calculate quotes with multiple margin calculation methods, designed for efficient pricing and profitability analysis.
 
-🔗 **[Live Demo](#)** _(Add your GitHub Pages link here once deployed)_
+🔗 **Live Demo**
+https://mjbusch2121.github.io/Produce-Margin-Calculator/
 
 ![Calculator Preview](screenshot.png)
 
@@ -134,7 +135,7 @@ MIT License - Feel free to use this project for personal or commercial purposes.
 ## Author
 
 **Mike** - Produce enthusiast and web developer  
-[GitHub] https://github.com/mjbusch2121 | [Portfolio] michaelbuschportfolio.com | [LinkedIn] https://www.linkedin.com/in/mike-busch-0b343a34b/
+[GitHub] https://github.com/mjbusch2121 | [Portfolio] https://www.michaelbuschportfolio.com | [LinkedIn] https://www.linkedin.com/in/mike-busch-0b343a34b/
 
 ---
 
